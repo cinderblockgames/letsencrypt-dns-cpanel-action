@@ -1,6 +1,10 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
 {
@@ -44,8 +48,13 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
         private async Task<int> GetLineNumber()
         {
             var get = $"{Connection.BaseUri}&{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.GET_FUNCTION}";
-            var response = await Client.GetAsync(get);
-            return 0;
+            var response = await Client.GetStringAsync(get);
+            JObject json = (JObject)JsonConvert.DeserializeObject(response);
+            var name = $"{ConnectionInfo.SUBDOMAIN_BASE}.{Connection.Domain}.";
+            var path = string.Format(ConnectionInfo.JPATH_FORMAT, name);
+            // .Last() instead of .Single() because the user might have some already in there.
+            // This will return the last one, which should be the one we added.
+            return json.SelectTokens(path).Values<int>().Last();
         }
 
         #region " ConnectionInfo "
@@ -79,6 +88,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
             // remove
             public const string REMOVE_FUNCTION = "remove_zone_record";
             public const string LINE_PARAMETER = "line";
+            public const string JPATH_FORMAT = "$.cpanelresult.data[?(@.name == '{0}')].line";
 
             public string Authorization
             {

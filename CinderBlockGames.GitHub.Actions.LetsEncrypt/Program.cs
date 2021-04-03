@@ -45,6 +45,8 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
             // Complete processing.
             await Task.WhenAll(remove);
+            Console.WriteLine();
+            Console.WriteLine("Complete!");
         }
 
     }
