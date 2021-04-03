@@ -8,7 +8,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
     class Program
     {
 
-        static async void Main(string[] args)
+        static async Task Main(string[] args)
         {
             await Parser.Default.ParseArguments<Options>(args)
                 .WithParsedAsync(Run);
