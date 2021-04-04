@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="action.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Certes" Version="2.3.4" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />

@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BD100015-38DC-40F0-8A6D-B9585704ED8C}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
+		action.yml = action.yml
+		Dockerfile = Dockerfile
 		..\LICENSE = ..\LICENSE
 		Notes.txt = Notes.txt
 		..\README.md = ..\README.md

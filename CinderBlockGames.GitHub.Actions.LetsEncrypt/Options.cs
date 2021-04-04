@@ -18,10 +18,10 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
                 HelpText = "Port for the cPanel server.")]
         public int Port { get; set; }
 
-        [Option("username",
+        [Option("cpanelUsername",
                 Required = true,
                 HelpText = "Username for the cPanel server.")]
-        public string Username { get; set; }
+        public string CpanelUsername { get; set; }
 
         [Option("cpanelApiToken",
                 Required = true,
@@ -57,7 +57,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
         [Option("certOrg",
             Required = true,
-            HelpText = "The organization to be included for the issued certifiate.")]
+            HelpText = "The organization to be included for the issued certificate.")]
         public string CertificateOrganization { get; set; }
 
         [Option("certOU",
@@ -99,7 +99,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
         
         [Option("secretsRepo",
             Required = true,
-            HelpText = "Repo in which to manage secrets related to this Action.")]
+            HelpText = "Repo in which to store outputs from this Action.")]
         public string SecretsRepo { get; set; }
 
         // Secrets

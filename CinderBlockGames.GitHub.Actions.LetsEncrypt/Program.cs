@@ -23,7 +23,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
                 new Connectors.Cpanel.ConnectionInfo(
                     options.Host,
                     options.Port,
-                    options.Username,
+                    options.CpanelUsername,
                     options.CpanelApiToken,
                     options.Domain));
             var github = new Connectors.Github(
