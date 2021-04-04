@@ -36,7 +36,6 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
         private async Task<Key> GetPublicKey()
         {
             var get = $"{_connection.BaseUri}{ConnectionInfo.PUBLIC_KEY_PATH}";
-            Console.WriteLine("Getting public key from " + get);
             var response = await _client.GetStringAsync(get);
             return JsonConvert.DeserializeObject<Key>(response);
         }
