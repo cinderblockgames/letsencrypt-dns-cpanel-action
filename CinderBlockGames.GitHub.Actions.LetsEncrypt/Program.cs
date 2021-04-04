@@ -30,27 +30,28 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
                 new Connectors.Github.ConnectionInfo(
                     options.GitHubAccessToken,
                     options.SecretsRepo));
-            var letsEncrypt = new Connectors.LetsEncrypt();
+            var letsEncrypt = new Connectors.LetsEncrypt(
+                new Connectors.LetsEncrypt.CertificateInfo(
+                    options.AcmeAccountEmailAddress,
+                    options.AcmeAccountKey,
+                    options.CertificateCommonName,
+                    options.CertificateIdentifiers,
+                    options.CertificateOrganization,
+                    options.CertificateOrganizationUnit,
+                    options.CertificateLocality,
+                    options.CertificateState,
+                    options.CertificateCountry,
+                    options.CertificatePassword,
+                    options.CertificateKeyAlgorithm),
+                new Connectors.LetsEncrypt.SecretsInfo(
+                    options.AcmeAccountKeyName,
+                    options.PublicChainName,
+                    options.PrivateKeyName),
+                cpanel,
+                github);
 
-            // Start the Let's Encrypt DNS verification.
-            
-
-            // Add the DNS record to verify the domain.
-            //await cpanel.AddRecord(value);
-
-            // Complete the Let's Encrypt DNS verification.
-
-
-            // Remove the DNS record, now that it's no longer needed.
-            //var remove = cpanel.RemoveRecord();
-
-            // Save the certificate to the repository's secrets.
-
-
-            // Complete processing.
-            //await Task.WhenAll(remove);
-            Console.WriteLine();
-            Console.WriteLine("Complete!");
+            // Process the certificate order.
+            await letsEncrypt.OrderCertificate();
         }
 
     }

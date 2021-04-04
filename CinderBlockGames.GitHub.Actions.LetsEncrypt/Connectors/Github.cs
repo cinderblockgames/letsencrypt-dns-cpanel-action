@@ -11,16 +11,16 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
     internal class Github
     {
 
-        private readonly ConnectionInfo Connection;
-        private readonly HttpClient Client;
+        private readonly ConnectionInfo _connection;
+        private readonly HttpClient _client;
 
         public Github(ConnectionInfo connection)
         {
-            Connection = connection;
-            Client = HttpClientFactory.Create();
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                ConnectionInfo.AUTHORIZATION_TYPE, Connection.AccessToken);
-            Client.DefaultRequestHeaders.Add("User-Agent", "GitHub Action"); // GitHub returns 403 unless you have a user agent specified.
+            _connection = connection;
+            _client = HttpClientFactory.Create();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                ConnectionInfo.AUTHORIZATION_TYPE, _connection.AccessToken);
+            _client.DefaultRequestHeaders.Add("User-Agent", "GitHub Action"); // GitHub returns 403 unless you have a user agent specified.
         }
 
         public async Task SetSecret(string name, string value)
@@ -28,15 +28,15 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
             var key = await GetPublicKey();
             var encrypted = Convert.ToBase64String(
                 SealedPublicKeyBox.Create(value, key.Value));
-            await Client.PutAsync(
-                $"{Connection.BaseUri}/{name}",
+            await _client.PutAsync(
+                $"{_connection.BaseUri}/{name}",
                 JsonContent.Create(new { encrypted_value = encrypted, key_id = key.Id }));
         }
 
         private async Task<Key> GetPublicKey()
         {
-            var get = $"{Connection.BaseUri}{ConnectionInfo.PUBLIC_KEY_PATH}";
-            var response = await Client.GetStringAsync(get);
+            var get = $"{_connection.BaseUri}{ConnectionInfo.PUBLIC_KEY_PATH}";
+            var response = await _client.GetStringAsync(get);
             return JsonConvert.DeserializeObject<Key>(response);
         }
 

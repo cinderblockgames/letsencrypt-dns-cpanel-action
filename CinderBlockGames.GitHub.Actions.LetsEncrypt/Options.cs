@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using Certes;
+using CommandLine;
 
 namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 {
@@ -34,7 +35,60 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
         // Let's Encrypt
 
+        [Option("acmeAccountEmailAddress",
+            Required = false,
+            HelpText = "The email address to associate with the account when communicating with Let's Encrypt.  REQUIRED if AcmeAccountKey is not provided.")]
+        public string AcmeAccountEmailAddress { get; set; }
 
+        [Option("acmeAccountKey",
+            Required = false,
+            HelpText = "The key associated with the account to use when communicating with Let's Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.")]
+        public string AcmeAccountKey { get; set; }
+
+        [Option("certCN",
+            Required = true,
+            HelpText = "The common name to be used for the issued certificate.")]
+        public string CertificateCommonName { get; set; }
+
+        [Option("certDomainList",
+            Required = true,
+            HelpText = "The domains to be included in the issued certificate, separated by a pipe (|) character.")]
+        public string CertificateIdentifiers { get; set; }
+
+        [Option("certOrg",
+            Required = true,
+            HelpText = "The organization to be included for the issued certifiate.")]
+        public string CertificateOrganization { get; set; }
+
+        [Option("certOU",
+            Required = true,
+            HelpText = "The unit within the organization to be included for the issued certificate.")]
+        public string CertificateOrganizationUnit { get; set; }
+
+        [Option("certLocality",
+            Required = true,
+            HelpText = "The locality in which the ogranization is located, to be included for the issued certificate.")]
+        public string CertificateLocality { get; set; }
+
+        [Option("certState",
+            Required = true,
+            HelpText = "The state in which the ogranization is located, to be included for the issued certificate.")]
+        public string CertificateState { get; set; }
+
+        [Option("certCountry",
+            Required = true,
+            HelpText = "The country in which the ogranization is located, to be included for the issued certificate.")]
+        public string CertificateCountry { get; set; }
+
+        [Option("certPassword",
+            Required = false, Default = "",
+            HelpText = "The password to apply to the issued PFX.  Leave blank for no password.")]
+        public string CertificatePassword { get; set; }
+
+        [Option("certKeyAlgorithm",
+            Required = false, Default = KeyAlgorithm.ES256,
+            HelpText = "Algorithm to use for private key.  See options at https://github.com/fszlin/certes/blob/master/src/Certes/KeyAlgorithm.cs.")]
+        public KeyAlgorithm CertificateKeyAlgorithm { get; set; }
 
         // GitHub
 
@@ -50,7 +104,20 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
         // Secrets
 
+        [Option("acmeAccountKeyName",
+            Required = false, Default = "ACME_ACCOUNT_KEY",
+            HelpText = "Name to use when saving the ACME account key as a secret in SecretsRepo.")]
+        public string AcmeAccountKeyName { get; set; }
 
+        [Option("publicChainName",
+            Required = false, Default = "CERT_PUBLIC_CHAIN",
+            HelpText = "Name to use when saving the certificate's public chain as a secret in SecretsRepo.")]
+        public string PublicChainName { get; set; }
+
+        [Option("privateKeyName",
+            Required = false, Default = "CERT_PRIVATE_KEY",
+            HelpText = "Name to use when saving the certificate's private key as a secret in SecretsRepo.")]
+        public string PrivateKeyName { get; set; }
 
     }
 }

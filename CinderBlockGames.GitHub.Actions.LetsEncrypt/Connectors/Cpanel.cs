@@ -10,46 +10,47 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
     internal class Cpanel
     {
 
-        private readonly ConnectionInfo Connection;
-        private readonly HttpClient Client;
+        private readonly ConnectionInfo _connection;
+        private readonly HttpClient _client;
 
         public Cpanel(ConnectionInfo connection)
         {
-            Connection = connection;
-            Client = HttpClientFactory.Create();
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                ConnectionInfo.AUTHORIZATION_TYPE, Connection.Authorization);
+            _connection = connection;
+            _client = HttpClientFactory.Create();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                ConnectionInfo.AUTHORIZATION_TYPE, _connection.Authorization);
         }
 
-        public async Task AddRecord(string data)
+        public async Task AddRecord(string domain, string data)
         {
             var add = string.Join(
                 '&',
-                Connection.BaseUri,
+                _connection.BaseUri,
                 $"{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.ADD_FUNCTION}",
                 ConnectionInfo.TYPE_PARAMETER_ARGUMENT,
-                $"{ConnectionInfo.NAME_PARAMETER}={ConnectionInfo.SUBDOMAIN_BASE}.{Connection.Domain}.",
+                ConnectionInfo.TIME_TO_LIVE_PARAMETER_ARGUMENT,
+                $"{ConnectionInfo.NAME_PARAMETER}={ConnectionInfo.SUBDOMAIN_BASE}.{domain}.",
                 $"{ConnectionInfo.DATA_PARAMETER}={data}");
-            await Client.GetAsync(add);
+            await _client.GetAsync(add);
         }
 
-        public async Task RemoveRecord()
+        public async Task RemoveRecord(string domain)
         {
-            var line = await GetLineNumber();
+            var line = await GetLineNumber(domain);
             var remove = string.Join(
                 '&',
-                Connection.BaseUri,
+                _connection.BaseUri,
                 $"{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.REMOVE_FUNCTION}",
                 $"{ConnectionInfo.LINE_PARAMETER}={line}");
-            await Client.GetAsync(remove);
+            await _client.GetAsync(remove);
         }
 
-        private async Task<int> GetLineNumber()
+        private async Task<int> GetLineNumber(string domain)
         {
-            var get = $"{Connection.BaseUri}&{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.GET_FUNCTION}";
-            var response = await Client.GetStringAsync(get);
+            var get = $"{_connection.BaseUri}&{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.GET_FUNCTION}";
+            var response = await _client.GetStringAsync(get);
             var json = (JObject)JsonConvert.DeserializeObject(response);
-            var name = $"{ConnectionInfo.SUBDOMAIN_BASE}.{Connection.Domain}.";
+            var name = $"{ConnectionInfo.SUBDOMAIN_BASE}.{domain}.";
             var path = string.Format(ConnectionInfo.JPATH_FORMAT, name);
             // .Last() instead of .Single() because the user might have some already in there.
             // This will return the last one, which should be the one we added.
@@ -69,7 +70,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
             private int Port { get; }
             private string Username { get; }
             private string ApiToken { get; }
-            public string Domain { get; }
+            private string Domain { get; }
 
             public const string AUTHORIZATION_TYPE = "cpanel";
             public const string FUNCTION_PARAMETER = "cpanel_jsonapi_func";
@@ -77,6 +78,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
             // add
             public const string ADD_FUNCTION = "add_zone_record";
             public const string TYPE_PARAMETER_ARGUMENT = "type=TXT";
+            public const string TIME_TO_LIVE_PARAMETER_ARGUMENT = "ttl=1";
             public const string NAME_PARAMETER = "name";
             public const string DATA_PARAMETER = "txtdata";
             public const string SUBDOMAIN_BASE = "_acme-challenge";
