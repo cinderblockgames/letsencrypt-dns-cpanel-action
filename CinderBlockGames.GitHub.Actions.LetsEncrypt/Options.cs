@@ -5,10 +5,6 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
     public class Options
     {
 
-        // Certificate
-
-
-
         // cPanel
 
         [Option("host",
@@ -26,10 +22,10 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
                 HelpText = "Username for the cPanel server.")]
         public string Username { get; set; }
 
-        [Option("apiToken",
+        [Option("cpanelApiToken",
                 Required = true,
                 HelpText = "API Token for the cPanel server.")]
-        public string ApiToken { get; set; }
+        public string CpanelApiToken { get; set; }
 
         [Option("domain",
                 Required = true,
@@ -41,6 +37,18 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
 
         // GitHub
+
+        [Option("githubAccessToken",
+            Required = true,
+            HelpText = "Personal Access Token with repo access for GitHub secrets access.")]
+        public string GitHubAccessToken { get; set; }
+        
+        [Option("secretsRepo",
+            Required = true,
+            HelpText = "Repo in which to manage secrets related to this Action.")]
+        public string SecretsRepo { get; set; }
+
+        // Secrets
 
 
 

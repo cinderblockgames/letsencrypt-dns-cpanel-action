@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors;
 using CommandLine;
 
 namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
@@ -20,31 +19,36 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
         private static async Task Run(Options options)
         {
             // Set up connectors.
-            var cpanel = new Cpanel(
-                new Cpanel.ConnectionInfo(
+            var cpanel = new Connectors.Cpanel(
+                new Connectors.Cpanel.ConnectionInfo(
                     options.Host,
                     options.Port,
                     options.Username,
-                    options.ApiToken,
+                    options.CpanelApiToken,
                     options.Domain));
+            var github = new Connectors.Github(
+                new Connectors.Github.ConnectionInfo(
+                    options.GitHubAccessToken,
+                    options.SecretsRepo));
+            var letsEncrypt = new Connectors.LetsEncrypt();
 
             // Start the Let's Encrypt DNS verification.
-            var value = "info";
+            
 
             // Add the DNS record to verify the domain.
-            await cpanel.AddRecord(value);
+            //await cpanel.AddRecord(value);
 
             // Complete the Let's Encrypt DNS verification.
 
 
             // Remove the DNS record, now that it's no longer needed.
-            var remove = cpanel.RemoveRecord();
+            //var remove = cpanel.RemoveRecord();
 
             // Save the certificate to the repository's secrets.
 
 
             // Complete processing.
-            await Task.WhenAll(remove);
+            //await Task.WhenAll(remove);
             Console.WriteLine();
             Console.WriteLine("Complete!");
         }

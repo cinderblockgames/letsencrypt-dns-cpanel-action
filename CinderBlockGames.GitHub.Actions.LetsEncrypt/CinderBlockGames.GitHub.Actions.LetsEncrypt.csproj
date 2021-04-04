@@ -6,8 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Certes" Version="2.3.4" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Sodium.Core" Version="1.2.3" />
   </ItemGroup>
 
 </Project>

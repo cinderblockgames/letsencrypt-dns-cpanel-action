@@ -1,10 +1,9 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
 {
@@ -49,7 +48,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
         {
             var get = $"{Connection.BaseUri}&{ConnectionInfo.FUNCTION_PARAMETER}={ConnectionInfo.GET_FUNCTION}";
             var response = await Client.GetStringAsync(get);
-            JObject json = (JObject)JsonConvert.DeserializeObject(response);
+            var json = (JObject)JsonConvert.DeserializeObject(response);
             var name = $"{ConnectionInfo.SUBDOMAIN_BASE}.{Connection.Domain}.";
             var path = string.Format(ConnectionInfo.JPATH_FORMAT, name);
             // .Last() instead of .Single() because the user might have some already in there.
