@@ -26,37 +26,55 @@ This action handles issuing a certificate through Let's Encrypt by managing the 
 | publicChainName         | No            | **CERT_PUBLIC_CHAIN** | Name to use when saving the certificate's public chain as a secret in SecretsRepo.                                                      |
 | privateKeyName          | No            | **CERT_PRIVATE_KEY**  | Name to use when saving the certificate's private key as a secret in SecretsRepo.                                                       |
 
-## Example Workflow    DO THIS PART!!
+## Example Workflow
 ```
 # Workflow name
-name: Deploy site to live
+name: Update Certificate
 
+# Controls when the action will run.
 on:
-  # Run automatically on push to main branch
-  push:
-    branches: [ main ]
-    paths:
-    - 'src/**'
-  # Allow manual trigger
+  schedule:
+    # Runs at 16:00 UTC on the 15th in Jan, Mar, May, Jul, Sep, and Nov
+    - cron: '0 16 15 1,3,5,7,9,11 *'
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  web-deploy:
-    name: Deploy
+  update-cert:
     runs-on: ubuntu-latest
     steps:
-    - name: Issue Cert
-      uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.0
-      with:
-        # required
-        server: ftp.example.com
-        username: example@example.com
-        password: ${{ secrets.FTP_PASSWORD }}
-        # optional
-        port: 22
-        source: src/path
-        destination: target/path
-        skipUnchanged: true
-        skipDirectories: .github|.well-known|configs|private-keys
-        test: true
+      - name: Issue certificate
+        uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.0
+        with:
+          # REQUIRED
+          # cPanel
+          host: example.com
+          cpanelUsername: '${{ secrets.CPANEL_USERNAME }}'
+          cpanelApiToken: '${{ secrets.CPANEL_API_KEY }}'
+          domain: homelab.express
+          # Let's Encrypt
+          acmeAccountEmailAddress: youremail@example.com
+          #acmeAccountKey: '${{ secrets.ACME_ACCOUNT_KEY }}'
+          certCN: '*.homelab.express'
+          certOrg: homelab.express
+          certOU: private network
+          certLocality: private
+          certState: network
+          certCountry: earth
+          certDomainList: '*.homelab.express|*.red.homelab.express|*.orange.homelab.express|*.yellow.homelab.express'
+          # GitHub
+          githubAccessToken: '${{ secrets.GIT_HUB_ACCESS_TOKEN }}'
+          secretsRepo: yourgithubuser/yourgithubrepo
+
+          # OPTIONAL
+          # cPanel
+          port: 2084
+          # Let's Encrypt
+          certPassword: 'sUP3r--s3cuR3'
+          certKeyAlgorithm: ES512
+          # secrets
+          acmeAccountKeyName: ACME_ACCOUNT_KEY_2
+          publicChainName: CERT_PUBLIC_CHAIN_2
+          privateKeyName: CERT_PRIVATE_KEY_2
 ```
