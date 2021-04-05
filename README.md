@@ -83,3 +83,11 @@ jobs:
 The PFX is stored in a base64-encoded string, so you need to decode it on the way out.  For an example of how to do that, check out this workflow:
 
 https://github.com/cinderblockgames/homelab.express/blob/main/.github/workflows/upload-cert.yml
+
+```
+      - name: Copy certificate private key
+        uses: kitek/decode-base64-into-file-action@1.0
+        with:
+          encoded-value: ${{ secrets.CERT_PRIVATE_KEY }}
+          destination-file: ~/cert.pfx
+```
