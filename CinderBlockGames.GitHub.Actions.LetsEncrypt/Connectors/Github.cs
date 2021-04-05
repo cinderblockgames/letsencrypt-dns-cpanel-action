@@ -35,6 +35,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
 
         private async Task<Key> GetPublicKey()
         {
+            // Should probably cache this.
             var get = $"{_connection.BaseUri}{ConnectionInfo.PUBLIC_KEY_PATH}";
             var response = await _client.GetStringAsync(get);
             return JsonConvert.DeserializeObject<Key>(response);

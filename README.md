@@ -18,7 +18,7 @@ This action handles issuing a certificate through Let's Encrypt by managing the 
 | **certLocality**        | **Yes**       |                       | The locality in which the ogranization is located, to be included for the issued certificate.                                           |
 | **certState**           | **Yes**       |                       | The state in which the ogranization is located, to be included for the issued certificate.                                              |
 | **certCountry**         | **Yes**       |                       | The country in which the ogranization is located, to be included for the issued certificate.                                            |
-| certPassword            | No            |                       | The password to apply to the issued PFX.  Leave blank for no password.                                                                  |
+| certPassword            | No            |                       | The password to apply to the issued PFX.                                                                                                |
 | certKeyAlgorithm        | No            | **ES256**             | Algorithm to use for private key.  See options at https://github.com/fszlin/certes/blob/master/src/Certes/KeyAlgorithm.cs.              |
 | **githubAccessToken**   | **Yes**       |                       | Personal Access Token with repo access for GitHub secrets access.                                                                       |
 | **secretsRepo**         | **Yes**       |                       | Repo in which to store outputs from this Action.                                                                                        |
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Issue certificate
-        uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.0
+        uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.1
         with:
           # REQUIRED
           # cPanel
@@ -77,4 +77,17 @@ jobs:
           acmeAccountKeyName: ACME_ACCOUNT_KEY_2
           publicChainName: CERT_PUBLIC_CHAIN_2
           privateKeyName: CERT_PRIVATE_KEY_2
+```
+
+## How to retrieve the PFX from secrets
+The PFX is stored in a base64-encoded string, so you need to decode it on the way out.  For an example of how to do that, check out this workflow:
+
+https://github.com/cinderblockgames/homelab.express/blob/main/.github/workflows/upload-cert.yml
+
+```
+      - name: Copy certificate private key
+        uses: kitek/decode-base64-into-file-action@1.0
+        with:
+          encoded-value: ${{ secrets.CERT_PRIVATE_KEY }}
+          destination-file: ~/cert.pfx
 ```

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Certes;
 using Certes.Acme;
@@ -81,7 +80,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
                 cert.ToPem());
             var pfx = _secrets.SetSecret(
                 _names.PrivateKeyName,
-                Convert.ToBase64String(cert.ToPfx(key).Build(_certInfo.CommonName, _certInfo.Password)));
+               Convert.ToBase64String(cert.ToPfx(key).Build(_certInfo.CommonName, _certInfo.Password)));
             await Task.WhenAll(chain, pfx);
 
             Console.WriteLine("Complete!");
