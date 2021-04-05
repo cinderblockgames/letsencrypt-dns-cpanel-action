@@ -78,3 +78,6 @@ jobs:
           publicChainName: CERT_PUBLIC_CHAIN_2
           privateKeyName: CERT_PRIVATE_KEY_2
 ```
+
+## How to retrieve the PFX from secrets
+The PFX is stored in a base64-encoded string, so you need to decode it on the way out.  For an example of how to do that, check out this workflow:  https://github.com/cinderblockgames/homelab.express/blob/main/.github/workflows/upload-cert.yml
