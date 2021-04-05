@@ -94,9 +94,13 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
             var pfx = builder.Build(commonName, password);
             if (string.IsNullOrEmpty(password))
             {
+                Console.WriteLine("Fixing PFX...");
                 // If this was built with a blank password, the pfx will be unusable.
                 // Load it and save it off with no password.
-                var cert = new X509Certificate2(pfx, password);
+                var cert = new X509Certificate2(
+                    pfx,
+                    password,
+                    X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.MachineKeySet);
                 pfx = cert.Export(X509ContentType.Pfx);
             }
             return Convert.ToBase64String(pfx);
