@@ -1,0 +1,105 @@
+red				10 colors
+orange
+yellow
+green
+blue
+purple
+pink
+brown
+black
+white
+gomez			08 Addams family characters (need to add wednesday if not doing days of the week)
+morticia
+wednesday
+puglsey
+fester
+lurch
+thing
+itt
+heart			09 lucky charms marshmallows
+star
+horseshoe
+clover
+moon
+gold
+rainbow
+balloon
+hat
+sword			05 weapons
+spear
+axe
+bow
+fist
+mercury			10 planets
+venus
+earth
+mars
+jupiter
+saturn
+uranus
+neptune
+pluto
+ceres
+zero			10 numbers
+one
+two
+three
+four
+five
+six
+seven
+eight
+nine
+amethyst		11 gems
+beryl
+diamond
+emerald
+garnet
+onyx
+opal
+pearl
+ruby
+sapphire
+topaz
+alpha			05 greek letters
+beta
+gamma
+delta
+epsilon
+salmon			05 sushi fish
+bass
+tuna
+unagi
+escolar
+tofu			03 meat replacements
+tempeh
+seitan
+apple			10 fruits
+banana
+coconut
+lemon
+lime
+mango
+pear
+pineapple
+plum
+pomegranate
+blueberry		04 berries
+blackberry
+raspberry
+strawberry
+peanut			09 nuts
+almond
+cashew
+pecan
+walnut
+hazelnut
+pistachio
+macademia
+chestnut
+
+
+
+
+
+*.homelab.express|*.red.homelab.express|*.orange.homelab.express|*.yellow.homelab.express|*.green.homelab.express|*.blue.homelab.express|*.purple.homelab.express|*.pink.homelab.express|*.brown.homelab.express|*.black.homelab.express|*.white.homelab.express|*.gomez.homelab.express|*.morticia.homelab.express|*.wednesday.homelab.express|*.puglsey.homelab.express|*.fester.homelab.express|*.lurch.homelab.express|*.thing.homelab.express|*.itt.homelab.express|*.heart.homelab.express|*.star.homelab.express|*.horseshoe.homelab.express|*.clover.homelab.express|*.moon.homelab.express|*.gold.homelab.express|*.rainbow.homelab.express|*.balloon.homelab.express|*.hat.homelab.express|*.sword.homelab.express|*.spear.homelab.express|*.axe.homelab.express|*.bow.homelab.express|*.fist.homelab.express|*.mercury.homelab.express|*.venus.homelab.express|*.earth.homelab.express|*.mars.homelab.express|*.jupiter.homelab.express|*.saturn.homelab.express|*.uranus.homelab.express|*.neptune.homelab.express|*.pluto.homelab.express|*.ceres.homelab.express|*.zero.homelab.express|*.one.homelab.express|*.two.homelab.express|*.three.homelab.express|*.four.homelab.express|*.five.homelab.express|*.six.homelab.express|*.seven.homelab.express|*.eight.homelab.express|*.nine.homelab.express|*.amethyst.homelab.express|*.beryl.homelab.express|*.diamond.homelab.express|*.emerald.homelab.express|*.garnet.homelab.express|*.onyx.homelab.express|*.opal.homelab.express|*.pearl.homelab.express|*.ruby.homelab.express|*.sapphire.homelab.express|*.topaz.homelab.express|*.alpha.homelab.express|*.beta.homelab.express|*.gamma.homelab.express|*.delta.homelab.express|*.epsilon.homelab.express|*.salmon.homelab.express|*.bass.homelab.express|*.tuna.homelab.express|*.unagi.homelab.express|*.escolar.homelab.express|*.tofu.homelab.express|*.tempeh.homelab.express|*.seitan.homelab.express|*.apple.homelab.express|*.banana.homelab.express|*.coconut.homelab.express|*.lemon.homelab.express|*.lime.homelab.express|*.mango.homelab.express|*.pear.homelab.express|*.pineapple.homelab.express|*.plum.homelab.express|*.pomegranate.homelab.express|*.blueberry.homelab.express|*.blackberry.homelab.express|*.raspberry.homelab.express|*.strawberry.homelab.express|*.peanut.homelab.express|*.almond.homelab.express|*.cashew.homelab.express|*.pecan.homelab.express|*.walnut.homelab.express|*.hazelnut.homelab.express|*.pistachio.homelab.express|*.macademia.homelab.express|*.chestnut.homelab.express

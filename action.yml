@@ -1,0 +1,142 @@
+name: 'Issue Certificates via Let''s Encrypt DNS + cPanel'
+description: 'This action handles issuing a certificate through Let''s Encrypt by managing the appropriate DNS entries via the cPanel API.  The resultant private key will be saved to the repository''s secrets.'
+branding:
+  icon: lock
+  color: green
+inputs:
+  host:
+    description:
+      'Host portion of the cPanel server.'
+    required: true
+  port:
+    description:
+      'Port for the cPanel server.'
+    required: false
+    default: '2083'
+  cpanelUsername:
+    description:
+      'Username for the cPanel server.'
+    required: true
+  cpanelApiToken:
+    description:
+      'API Token for the cPanel server.'
+    required: true
+  domain:
+    description:
+      'Domain under which to place the DNS verification on the cPanel server.'
+    required: true
+  acmeAccountEmailAddress:
+    description:
+      'The email address to associate with the account when communicating with Let''s Encrypt.  REQUIRED if AcmeAccountKey is not provided.'
+    required: false
+  acmeAccountKey:
+    description:
+      'The key associated with the account to use when communicating with Let''s Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.'
+    required: false
+  certCN:
+    description:
+      'The common name to be used for the issued certificate.'
+    required: true
+  certDomainList:
+    description:
+      'The domains to be included in the issued certificate, separated by a pipe (|) character.'
+    required: true
+  certOrg:
+    description:
+      'The organization to be included for the issued certificate.'
+    required: true
+  certOU:
+    description:
+      'The unit within the organization to be included for the issued certificate.'
+    required: true
+  certLocality:
+    description:
+      'The locality in which the ogranization is located, to be included for the issued certificate.'
+    required: true
+  certState:
+    description:
+      'The state in which the ogranization is located, to be included for the issued certificate.'
+    required: true
+  certCountry:
+    description:
+      'The country in which the ogranization is located, to be included for the issued certificate.'
+    required: true
+  certPassword:
+    description:
+      'The password to apply to the issued PFX.  Leave blank for no password.'
+    required: false
+    default: ''
+  certKeyAlgorithm:
+    description:
+      'Algorithm to use for private key.  See options at https://github.com/fszlin/certes/blob/master/src/Certes/KeyAlgorithm.cs.'
+    required: false
+    default: 'ES256'
+  githubAccessToken:
+    description:
+      'Personal Access Token with repo access for GitHub secrets access.'
+    required: true
+  secretsRepo:
+    description:
+      'Repo in which to store outputs from this Action.'
+    required: true
+  acmeAccountKeyName:
+    description:
+      'Name to use when saving the ACME account key as a secret in SecretsRepo.'
+    required: false
+    default: 'ACME_ACCOUNT_KEY'
+  publicChainName:
+    description:
+      'Name to use when saving the certificate''s public chain as a secret in SecretsRepo.'
+    required: false
+    default: 'CERT_PUBLIC_CHAIN'
+  privateKeyName:
+    description:
+      'Name to use when saving the certificate''s private key as a secret in SecretsRepo.'
+    required: false
+    default: 'CERT_PRIVATE_KEY'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+  - '--host'
+  - ${{ inputs.host }}
+  - '--port'
+  - ${{ inputs.port }}
+  - '--cpanelUsername'
+  - ${{ inputs.cpanelUsername }}
+  - '--cpanelApiToken'
+  - ${{ inputs.cpanelApiToken }}
+  - '--domain'
+  - ${{ inputs.domain }}
+  - '--acmeAccountEmailAddress'
+  - ${{ inputs.acmeAccountEmailAddress }}
+  - '--acmeAccountKey'
+  - ${{ inputs.acmeAccountKey }}
+  - '--certCN'
+  - ${{ inputs.certCN }}
+  - '--certDomainList'
+  - ${{ inputs.certDomainList }}
+  - '--certOrg'
+  - ${{ inputs.certOrg }}
+  - '--certOU'
+  - ${{ inputs.certOU }}
+  - '--certLocality'
+  - ${{ inputs.certLocality }}
+  - '--certState'
+  - ${{ inputs.certState }}
+  - '--certCountry'
+  - ${{ inputs.certCountry }}
+  - '--certPassword'
+  - ${{ inputs.certPassword }}
+  - '--certKeyAlgorithm'
+  - ${{ inputs.certKeyAlgorithm }}
+  - '--githubAccessToken'
+  - ${{ inputs.githubAccessToken }}
+  - '--secretsRepo'
+  - ${{ inputs.secretsRepo }}
+  - '--acmeAccountKeyName'
+  - ${{ inputs.acmeAccountKeyName }}
+  - '--publicChainName'
+  - ${{ inputs.publicChainName }}
+  - '--privateKeyName'
+  - ${{ inputs.privateKeyName }}
