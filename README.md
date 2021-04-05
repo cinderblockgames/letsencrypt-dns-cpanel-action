@@ -18,7 +18,7 @@ This action handles issuing a certificate through Let's Encrypt by managing the 
 | **certLocality**        | **Yes**       |                       | The locality in which the ogranization is located, to be included for the issued certificate.                                           |
 | **certState**           | **Yes**       |                       | The state in which the ogranization is located, to be included for the issued certificate.                                              |
 | **certCountry**         | **Yes**       |                       | The country in which the ogranization is located, to be included for the issued certificate.                                            |
-| certPassword            | No            |                       | The password to apply to the issued PFX.  Leave blank for no password.                                                                  |
+| certPassword            | No            |                       | The password to apply to the issued PFX.                                                                                                |
 | certKeyAlgorithm        | No            | **ES256**             | Algorithm to use for private key.  See options at https://github.com/fszlin/certes/blob/master/src/Certes/KeyAlgorithm.cs.              |
 | **githubAccessToken**   | **Yes**       |                       | Personal Access Token with repo access for GitHub secrets access.                                                                       |
 | **secretsRepo**         | **Yes**       |                       | Repo in which to store outputs from this Action.                                                                                        |
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Issue certificate
-        uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.0
+        uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.0.1
         with:
           # REQUIRED
           # cPanel

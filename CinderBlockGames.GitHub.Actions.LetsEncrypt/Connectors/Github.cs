@@ -33,8 +33,19 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
                 JsonContent.Create(new { encrypted_value = encrypted, key_id = key.Id }));
         }
 
+        public async Task SetSecret(string name, byte[] value)
+        {
+            var key = await GetPublicKey();
+            var encrypted = Convert.ToBase64String(
+                SealedPublicKeyBox.Create(value, key.Value));
+            await _client.PutAsync(
+                $"{_connection.BaseUri}/{name}",
+                JsonContent.Create(new { encrypted_value = encrypted, key_id = key.Id }));
+        }
+
         private async Task<Key> GetPublicKey()
         {
+            // Should probably cache this.
             var get = $"{_connection.BaseUri}{ConnectionInfo.PUBLIC_KEY_PATH}";
             var response = await _client.GetStringAsync(get);
             return JsonConvert.DeserializeObject<Key>(response);

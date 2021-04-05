@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
 using System.Threading.Tasks;
 using Certes;
 using Certes.Acme;
 using Certes.Acme.Resource;
-using Certes.Pkcs;
 
 namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
 {
@@ -83,27 +80,10 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
                 cert.ToPem());
             var pfx = _secrets.SetSecret(
                 _names.PrivateKeyName,
-               BuildPfx(cert.ToPfx(key), _certInfo.CommonName, _certInfo.Password));
+               cert.ToPfx(key).Build(_certInfo.CommonName, _certInfo.Password));
             await Task.WhenAll(chain, pfx);
 
             Console.WriteLine("Complete!");
-        }
-
-        private string BuildPfx(PfxBuilder builder, string commonName, string password)
-        {
-            var pfx = builder.Build(commonName, password);
-            if (string.IsNullOrEmpty(password))
-            {
-                Console.WriteLine("Fixing PFX...");
-                // If this was built with a blank password, the pfx will be unusable.
-                // Load it and save it off with no password.
-                var cert = new X509Certificate2(
-                    pfx,
-                    password,
-                    X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.MachineKeySet);
-                pfx = cert.Export(X509ContentType.Pfx);
-            }
-            return Convert.ToBase64String(pfx);
         }
 
         private async Task<bool> Validate(AcmeContext acme, IAuthorizationContext auth)

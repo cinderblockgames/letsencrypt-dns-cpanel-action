@@ -82,7 +82,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
 
         [Option("certPassword",
             Required = false, Default = "",
-            HelpText = "The password to apply to the issued PFX.  Leave blank for no password.")]
+            HelpText = "The password to apply to the issued PFX.")]
         public string CertificatePassword { get; set; }
 
         [Option("certKeyAlgorithm",

@@ -63,7 +63,7 @@ inputs:
     required: true
   certPassword:
     description:
-      'The password to apply to the issued PFX.  Leave blank for no password.'
+      'The password to apply to the issued PFX.'
     required: false
     default: ''
   certKeyAlgorithm:
