@@ -1,5 +1,5 @@
 name: 'Issue Certificates via Let''s Encrypt DNS + cPanel'
-description: 'This action handles issuing a certificate through Let''s Encrypt by managing the appropriate DNS entries via the cPanel API.  The resultant private key will be saved to the repository''s secrets.'
+description: 'Issues a certificate through Let''s Encrypt using DNS entries via the cPanel API.  Resultant private key is saved to secrets.'
 branding:
   icon: lock
   color: green
