@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Certes;
@@ -32,7 +33,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
         {
             // Get account context.
             var acme = await GetContext();
-
+            
             // Submit the order.
             Console.WriteLine("Submitting certificate order...");
             var order = await acme.NewOrder(_certInfo.Identifiers);
@@ -173,7 +174,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
 
             public CertificateInfo(
                 string emailAddress,
-                string accountKey,
+                string accountKeyPath,
                 string commonName,
                 string identifiers,
                 string organization,
@@ -185,7 +186,9 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt.Connectors
                 KeyAlgorithm keyAlgorithm)
             {
                 EmailAddress = emailAddress;
-                AccountKey = accountKey;
+                AccountKey = (!string.IsNullOrWhiteSpace(accountKeyPath) && File.Exists(accountKeyPath))
+                    ? File.ReadAllText(accountKeyPath)
+                    : null;
                 CommonName = commonName;
                 Identifiers = identifiers.Split(
                     IDENTIFIERS_SEPARATOR,

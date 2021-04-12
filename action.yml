@@ -29,9 +29,9 @@ inputs:
     description:
       'The email address to associate with the account when communicating with Let''s Encrypt.  REQUIRED if AcmeAccountKey is not provided.'
     required: false
-  acmeAccountKey:
+  acmeAccountKeyPath:
     description:
-      'The key associated with the account to use when communicating with Let''s Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.'
+      'The file holding the key associated with the account to use when communicating with Let''s Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.'
     required: false
   certCN:
     description:
@@ -110,8 +110,8 @@ runs:
   - ${{ inputs.domain }}
   - '--acmeAccountEmailAddress'
   - ${{ inputs.acmeAccountEmailAddress }}
-  - '--acmeAccountKey'
-  - ${{ inputs.acmeAccountKey }}
+  - '--acmeAccountKeyPath'
+  - ${{ inputs.acmeAccountKeyPath }}
   - '--certCN'
   - ${{ inputs.certCN }}
   - '--certDomainList'

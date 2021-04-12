@@ -40,10 +40,10 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
             HelpText = "The email address to associate with the account when communicating with Let's Encrypt.  REQUIRED if AcmeAccountKey is not provided.")]
         public string AcmeAccountEmailAddress { get; set; }
 
-        [Option("acmeAccountKey",
+        [Option("acmeAccountKeyPath",
             Required = false,
-            HelpText = "The key associated with the account to use when communicating with Let's Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.")]
-        public string AcmeAccountKey { get; set; }
+            HelpText = "The file holding the key associated with the account to use when communicating with Let's Encrypt.  REQUIRED if AcmeAccountEmailAddress is not provided.")]
+        public string AcmeAccountKeyPath { get; set; }
 
         [Option("certCN",
             Required = true,
