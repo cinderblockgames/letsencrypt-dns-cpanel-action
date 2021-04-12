@@ -33,7 +33,7 @@ namespace CinderBlockGames.GitHub.Actions.LetsEncrypt
             var letsEncrypt = new Connectors.LetsEncrypt(
                 new Connectors.LetsEncrypt.CertificateInfo(
                     options.AcmeAccountEmailAddress,
-                    options.AcmeAccountKey,
+                    options.AcmeAccountKeyPath,
                     options.CertificateCommonName,
                     options.CertificateIdentifiers,
                     options.CertificateOrganization,
