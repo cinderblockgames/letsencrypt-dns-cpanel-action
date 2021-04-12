@@ -44,12 +44,12 @@ jobs:
   update-cert:
     runs-on: ubuntu-latest
     steps:
-      - name: Copy ACME account key
-        uses: DamianReeves/write-file-action@v1.0
-        with:
-          path: 'path/to/acme.key'
-          contents: ${{ secrets.ACME_ACCOUNT_KEY }}
-          write-mode: overwrite
+      #- name: Copy ACME account key
+      #  uses: DamianReeves/write-file-action@v1.0
+      #  with:
+      #    path: 'path/to/acme.key'
+      #    contents: ${{ secrets.ACME_ACCOUNT_KEY }}
+      #    write-mode: overwrite
       - name: Issue certificate
         uses: cinderblockgames/letsencrypt-dns-cpanel-action@v1.1.0
         with:
