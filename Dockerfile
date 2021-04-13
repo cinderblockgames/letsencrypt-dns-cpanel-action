@@ -10,8 +10,8 @@ LABEL homepage="https://cinderblockgames.com/"
 LABEL com.github.actions.name="Issue Certificates via Let's Encrypt DNS + cPanel"
 LABEL com.github.actions.description="This action handles issuing a certificate through Let's Encrypt by managing the appropriate DNS entries via the cPanel API.  The resultant private key will be saved to the repository's secrets."
 # https://docs.github.com/actions/creating-actions/metadata-syntax-for-github-actions#branding
-LABEL com.github.actions.icon="arrow-up-circle"
-LABEL com.github.actions.color="white"
+LABEL com.github.actions.icon="lock"
+LABEL com.github.actions.color="green"
 
 FROM mcr.microsoft.com/dotnet/runtime:5.0
 COPY --from=build-env /out .
